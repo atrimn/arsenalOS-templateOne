@@ -13,9 +13,11 @@ import {
   Separator,
 } from "../components/ArsenalUI"
 import { getFirebase } from "../firebase"
+import ReactHtmlParser from "react-html-parser"
 
 const Article = props => {
   const [data, setData] = useState({})
+  const bodyEl = document.createElement("html")
   React.useEffect(() => {
     // firebase
     const lazyFirebase = import("firebase/app")
@@ -33,7 +35,7 @@ const Article = props => {
           })
         )
     })
-  })
+  }, [])
 
   // console.log(props.path.split("/").pop())
   return (
@@ -54,8 +56,8 @@ const Article = props => {
       <section id="body" className="px-2 py-4">
         <Typography cardTitle>{data.title}</Typography>
         <Typography cardBody>Reading Time {data.reading_time}</Typography>
-        <div className="py-4">
-          <Typography articleBody>{data.custom_excerpt}</Typography>
+        <div className="py-4 text-white">
+          {ReactHtmlParser(data.custom_excerpt)}
         </div>
       </section>
     </div>

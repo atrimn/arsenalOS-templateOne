@@ -4,6 +4,7 @@ import { getFirebase } from "../firebase"
 import Layout from "../components/layout"
 import Image from "../components/image"
 import SEO from "../components/seo"
+import ReactHtmlParser from "react-html-parser"
 import {
   Button,
   Typography,
@@ -142,7 +143,7 @@ const IndexPage = () => {
                   <BarItem col>
                     <Typography cardTitle>{item.title}</Typography>
                     <Typography cardSubHeading>
-                      {item.custom_excerpt}
+                      {ReactHtmlParser(item.custom_excerpt)}
                     </Typography>
                   </BarItem>
                 </Flexbar>
