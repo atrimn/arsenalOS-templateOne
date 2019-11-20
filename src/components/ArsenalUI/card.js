@@ -95,7 +95,7 @@ export default ({
         background: color,
         ...gradientColor,
       }}
-      className={`relative ${paddingPY} ${alignDir} ${gutterRight} ${justifyDir} ${paddingPx} ${display} ${cardHeight} overflow-hidden bg-white ${maxWidth}    ${width} rounded-lg`}
+      className={`relative cursor-pointer ${paddingPY} ${alignDir} ${gutterRight} ${justifyDir} ${paddingPx} ${display} ${cardHeight} overflow-hidden bg-white ${maxWidth}    ${width} rounded-lg`}
     >
       {cardImage ? (
         <CardImage cardImage={cardImage} horizontal={horizontal} />

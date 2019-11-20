@@ -17,6 +17,7 @@ export default ({
   children,
   textStyles,
   titleColor,
+  articleBody,
   lg,
 }) => {
   if (!children) {
@@ -46,6 +47,16 @@ export default ({
   if (body) {
     return (
       <p style={{ ...textStyles }} className="text-white  text-base">
+        {children}
+      </p>
+    )
+  }
+  if (articleBody) {
+    return (
+      <p
+        style={{ ...textStyles }}
+        className="text-white tracking-wider text-sm"
+      >
         {children}
       </p>
     )

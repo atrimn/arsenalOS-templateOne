@@ -33,7 +33,7 @@ const IndexPage = () => {
   const [timer, setTimer] = React.useState()
   const [wordIndex, setIndex] = React.useState(0)
   // firebase
-  const [featured, setFeatured] = React.useState([])
+  const [articles, setArticles] = React.useState([])
   const [places, setPlaces] = React.useState([])
   const [firstPlace, setFirstPlace] = React.useState([])
 
@@ -54,14 +54,6 @@ const IndexPage = () => {
     }, 2000)
   }
 
-  // React.useEffect(() => {
-  //   if (places.length > 0) {
-  //     const firstPlace = places.slice(1)
-  //   } else {
-  //     console.log(places)
-  //   }
-  // }, [places])
-
   React.useEffect(() => {
     // firebase
     const lazyFirebase = import("firebase/app")
@@ -69,9 +61,9 @@ const IndexPage = () => {
 
     Promise.all([lazyFirebase]).then(([firebase]) => {
       const firestore = getFirebase(firebase).firestore()
-      firestore.collection("featured").onSnapshot(snapshot => {
+      firestore.collection("articles").onSnapshot(snapshot => {
         console.log(snapshot.docs.map(doc => doc.data()))
-        setFeatured(snapshot.docs.map(doc => doc.data()))
+        setArticles(snapshot.docs.map(doc => doc.data()))
       })
 
       firestore.collection("places").onSnapshot(snapshot => {
@@ -143,24 +135,18 @@ const IndexPage = () => {
           ></Button>
         </Flexbar>
         <ScrollView marginY horizontal>
-          {featured.map(item => (
-            <Card
-              key={item.main_picture}
-              gutter
-              color="#353535"
-              cardImage={item.main_picture}
-            >
-              <Flexbar padderY padderX col>
-                <BarItem col>
-                  <Typography cardTitle>{item.headline}</Typography>
-                  <Typography cardSubHeading>
-                    ${item.price}
-                    <span className="rounded h-2 w-2 ml-2 mr-2 bg-gray-200 inline-block"></span>
-                    by {item.city}
-                  </Typography>
-                </BarItem>
-              </Flexbar>
-              <Flexbar>
+          {articles.map(item => (
+            <a key={item.slug} href={`/articles/${item.slug}`}>
+              <Card gutter color="#353535" cardImage={item.feature_image}>
+                <Flexbar padderY padderX col>
+                  <BarItem col>
+                    <Typography cardTitle>{item.title}</Typography>
+                    <Typography cardSubHeading>
+                      {item.custom_excerpt}
+                    </Typography>
+                  </BarItem>
+                </Flexbar>
+                {/* <Flexbar>
                 <BarItem>
                   <a href="https://app.netlify.com/start/deploy?repository=https://github.com/atrimn/arsenalOS-templateOne">
                     <img
@@ -169,8 +155,9 @@ const IndexPage = () => {
                     />
                   </a>
                 </BarItem>
-              </Flexbar>
-            </Card>
+              </Flexbar> */}
+              </Card>
+            </a>
           ))}
         </ScrollView>
       </section>
